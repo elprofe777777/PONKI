@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DoomFrame Store - Tecnología para profesionales</title>
+    <style>
+        :root {
+            --main-red: #DC143C; /* Rojo carmesí */
+            --main-white: #FFFFFF;
+            --dark-gray: #333333;
+            --light-gray: #F5F5F5;
+            --main-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--main-font);
+        }
+
+        /* Página de bienvenida */
+        #welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--main-red);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1s ease-in-out;
+        }
+
+        #welcome-screen .logo {
+            width: 250px;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        #welcome-screen h1 {
+            color: var(--main-white);
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        #welcome-screen p {
+            color: var(--main-white);
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 40px;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        #welcome-screen button {
+            background-color: var(--main-white);
+            color: var(--main-red);
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            font-weight: bold;
+        }
+
+        #welcome-screen button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Animaciones */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Sitio principal */
+        body {
+            background-color: var(--light-gray);
+        }
+
+        header {
+            background-color: var(--main-red);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 180px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: var(--main-white);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--main-white);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .main-content {
+            margin-top: 80px;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards;
+            animation-delay: 0.5s;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(to right, rgba(220, 20, 60, 0.9), rgba(70, 10, 30, 0.9)), url('img/hero-background.jpg') center/cover no-repeat;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--main-white);
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            max-width: 800px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: var(--main-white);
+            color: var(--main-red);
+            border: 2px solid var(--main-white);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--main-white);
+            border: 2px solid var(--main-white);
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* About Section */
+        .about {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            color: var(--main-red);
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background-color: var(--main-red);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .about-card {
+            background-color: var(--main-white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .about-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .about-card h3 {
+            color: var(--main-red);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .about-card p {
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+
+        /* Valores Section */
+        .valores {
+            background-color: var(--main-red);
+            padding: 80px 20px;
+            color: var(--main-white);
+        }
+
+        .valores .section-title {
+            color: var(--main-white);
+        }
+
+        .valores .section-title::after {
+            background-color: var(--main-white);
+        }
+
+        .valores-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .valor-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .valor-card:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .valor-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .valor-card p {
+            line-height: 1.6;
+        }
+
+        /* Productos Section */
+        .productos {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .productos-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+
+        .tab-btn {
+            background-color: transparent;
+            border: none;
+            padding: 12px 25px;
+            margin: 0 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            color: var(--dark-gray);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            color: var(--main-red);
+            border-bottom: 3px solid var(--main-red);
+            font-weight: 600;
+        }
+
+        .productos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .producto-card {
+            background-color: var(--main-white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .producto-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .producto-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .producto-info {
+            padding: 20px;
+        }
+
+        .producto-info h3 {
+            color: var(--main-red);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .producto-info p {
+            color: var(--dark-gray);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .producto-info .precio {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark-gray);
+            margin-bottom: 20px;
+        }
+
+        .producto-info .btn {
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-gray);
+            color: var(--main-white);
+            padding: 60px 20px 20px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--main-red);
+        }
+
+        .footer-section p, .footer-section li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li a {
+            color: var(--main-white);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--main-red);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            color: var(--main-white);
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--main-red);
+        }
+
+        .footer-bottom {
+            margin-top: 40px;
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .navbar {
+                padding: 15px 20px;
+                flex-direction: column;
+            }
+
+            .logo-container {
+                margin-bottom: 15px;
+            }
+
+            nav ul {
+                margin-top: 10px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            nav ul li {
+                margin: 5px 10px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.3rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .main-content {
+                margin-top: 120px;
+            }
+        }
+
+        /* Product Categories Tabs */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--main-red);
+            color: var(--main-white);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.4s ease;
+            pointer-events: none;
+            z-index: 99;
+        }
+
+        .scroll-top.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Estilos adicionales para mejorar la experiencia del usuario */
+
+        /* Efecto de transición para productos */
+        .producto-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .producto-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s ease;
+            z-index: 1;
+        }
+
+        .producto-card:hover::before {
+            left: 100%;
+        }
+
+        /* Barra de progreso para indicar ofertas limitadas */
+        .oferta-especial {
+            position: relative;
+        }
+
+        .oferta-especial::after {
+            content: 'Oferta Especial';
+            position: absolute;
+            top: 15px;
+            right: -35px;
+            background-color: var(--main-red);
+            color: white;
+            padding: 5px 40px;
+            transform: rotate(45deg);
+            font-size: 0.8rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Animación de pulso para botones */
+        @keyframes pulseButton {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .btn-pulse {
+            animation: pulseButton 2s infinite;
+        }
+
+        /* Efecto de brillo para tarjetas destacadas */
+        .destacado {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .destacado::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .destacado:hover::after {
+            opacity: 1;
+        }
+
+        /* Mejora del menú de navegación en dispositivos móviles */
+        @media (max-width: 768px) {
+            .navbar {
+                position: relative;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                background-color: var(--main-red);
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                padding: 10px 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+                transform: translateY(-10px);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                z-index: 100;
+            }
+            
+            nav ul.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            nav ul li {
+                margin: 10px 0;
+                text-align: center;
+            }
+            
+            .menu-toggle {
+                display: block;
+                cursor: pointer;
+                font-size: 1.5rem;
+                color: var(--main-white);
+            }
+            
+            .logo-container {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        /* Estilo para el formulario de contacto rápido */
+        .contact-form {
+            background-color: var(--main-white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        .contact-form h3 {
+            color: var(--main-red);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--dark-gray);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: border 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--main-red);
+            outline: none;
+        }
+
+        /* Botón flotante de chat */
+        .chat-button {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--main-red);
+            color: var(--main-white);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            z-index: 99;
+        }
+
+        .chat-button:hover {
+            transform: scale(1.1);
+        }
+
+        .chat-button span {
+            font-size: 1.5rem;
+        }
+
+        /* Notificación para productos nuevos */
+        .new-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: var(--main-red);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .about-card, .valor-card, .producto-card, .section-title {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .modal-content h3 {
+            color: #DC143C;
+            margin-bottom: 20px;
+        }
+        
+        .modal-content p {
+            margin-bottom: 25px;
+        }
+        
+        .modal-content .btn {
+            margin: 0 10px;
+        }
+        
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+        
+        .shake {
+            animation: shake 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Pantalla de Bienvenida -->
+    <div id="welcome-screen">
+        <img src="DOOMFRAMER.png" alt="DoomFrame Logo" class="logo">
+        <h1>Bienvenido a DoomFrame Store</h1>
+        <p>"Trae tu idea, nosotros ponemos el Hardware"</p>
+        <button id="enter-btn">ENTRAR AL SITIO</button>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="navbar">
+            <div class="logo-container">
+                <img src="DOOMFRAMER.png" alt="DoomFrame Logo" class="logo">
+                <div class="menu-toggle" id="mobile-menu">
+                    <span>☰</span>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Inicio</a></li>
+                    <li><a href="#about">Quiénes Somos</a></li>
+                    <li><a href="#valores">Valores</a></li>
+                    <li><a href="#productos">Productos</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <h1>DoomFrame Store</h1>
+            <p>"Trae tu idea, nosotros ponemos el Hardware"</p>
+            <div class="hero-buttons">
+                <a href="#productos" class="btn btn-primary">Ver Productos</a>
+                <a href="#about" class="btn btn-secondary">Conocer Más</a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about" id="about">
+            <h2 class="section-title">Quiénes Somos</h2>
+            <div class="about-content">
+                <div class="about-card">
+                    <h3>Misión</h3>
+                    <p>En DoomFrame Store, nuestra misión es ser el puente que conecta a nuestros clientes con la tecnología más avanzada y de calidad superior. Nos dedicamos a proporcionar equipos y componentes seleccionados rigurosamente, adaptados a las necesidades de cada usuario, ya sea para el entretenimiento, el estudio o la productividad profesional. Con un enfoque en la innovación, la sostenibilidad y el soporte personalizado, trabajamos día a día para que cada compra se traduzca en una experiencia transformadora y confiable.</p>
+                </div>
+                <div class="about-card">
+                    <h3>Visión</h3>
+                    <p>Aspiramos a ser la empresa líder en el mercado tecnológico, reconocida por nuestro compromiso con la excelencia y la innovación constante. Imaginamos un futuro donde la tecnología esté al servicio de la productividad y el bienestar de las personas, transformando la experiencia digital en una herramienta accesible y empoderadora para todos. Conectando cada componente de nuestro servicio como si de un circuito se tratase, forjamos un camino de crecimiento y renovación que inspire y trascienda en el tiempo.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Valores Section -->
+        <section class="valores" id="valores">
+            <h2 class="section-title">Nuestros Valores</h2>
+            <div class="valores-grid">
+                <div class="valor-card">
+                    <h3>1. Calidad sin Compromisos</h3>
+                    <p>En DoomFrame Store, cada equipo es elegido y probado para garantizar altos estándares de desempeño y durabilidad, respaldando a gamers, estudiantes y profesionales con tecnología fiable y de excelencia.</p>
+                </div>
+                <div class="valor-card">
+                    <h3>2. Innovación y Vanguardia</h3>
+                    <p>Estamos inspirados en la conectividad del mundo digital, nos mantenemos a la vanguardia con las últimas tendencias en hardware y software para ofrecer lo mejor en tecnología.</p>
+                </div>
+                <div class="valor-card">
+                    <h3>3. Accesibilidad para Todos</h3>
+                    <p>Creemos firmemente que la tecnología debe ser un derecho, por lo que ofrecemos dispositivos en diversas gamas para que cada cliente encuentre exactamente lo que necesita, sin importar su presupuesto.</p>
+                </div>
+                <div class="valor-card">
+                    <h3>4. Asesoramiento y Soporte</h3>
+                    <p>Ofrecemos un servicio personalizado y un soporte técnico cercano, asegurando que cada experiencia de compra se traduzca en confianza y satisfacción duradera.</p>
+                </div>
+                <div class="valor-card">
+                    <h3>5. Compromiso Ambiental</h3>
+                    <p>Promovemos el reciclaje y la reutilización de componentes, adoptando prácticas sostenibles que cuiden el planeta mientras impulsamos la revolución tecnológica.</p>
+                </div>
+                <div class="valor-card">
+                    <h3>6. Transparencia y Honestidad</h3>
+                    <p>Nuestra comunicación se basa en la claridad y la veracidad, ofreciendo información precisa y sin ambigüedades para que cada transacción sea segura y confiable.</p>
+                </div>
+                <div class="valor-card">
+                    <h3>7. Pasión por la Tecnología</h3>
+                    <p>Nuestra devoción por la informática nos impulsa a innovar constantemente y compartir nuestro entusiasmo, inspirando a cada cliente a descubrir un mundo de posibilidades digitales.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Productos Section -->
+        <section class="productos" id="productos">
+            <h2 class="section-title">Nuestros Productos</h2>
+            <div class="productos-tabs">
+                <button class="tab-btn active" data-tab="alta">Gama Alta</button>
+                <button class="tab-btn" data-tab="media">Gama Media</button>
+                <button class="tab-btn" data-tab="baja">Gama Baja</button>
+            </div>
+            
+            <!-- Gama Alta -->
+            <div class="tab-content active" id="alta">
+                <div class="productos-grid">
+                    <div class="producto-card">
+                        <img src="img/pc-gama-alta-1.jpg" alt="PC Gama Alta" class="producto-img">
+                        <div class="producto-info">
+                            <h3>DoomFrame Titan X</h3>
+                            <p>Equipo de alto rendimiento con procesador Intel Core i9, 64GB RAM, SSD 2TB, RTX 4090.</p>
+                            <p class="precio">$3,499.99</p>
+                            <a href="#" class="btn btn-primary">Comprar Ahora</a>
+                        </div>
+                    </div>
+                    <div class="producto-card oferta-especial">
+                        <img src="img/pc-gama-alta-2.jpg" alt="PC Gama Alta" class="producto-img">
+                        <div class="producto-info">
+                            <h3>DoomFrame Creator Pro</h3>
+                            <p>Diseñado para profesionales creativos. AMD Ryzen 9, 32GB RAM, SSD 1TB + HDD 4TB, RTX 4080.</p>
+                            <p class="precio">$2,899.99</p>
+                            <a href="#" class="btn btn-primary">Comprar Ahora</a>
+                        </div>
+                    </div>
+
+                    <div class="producto-card destacado">
+                        <img src="img/pc-gama-alta-3.jpg" alt="PC Gama Alta" class="producto-img">
+                        <span class="new-badge">NUEVO</span>
+                        <div class="producto-info">
+                            <h3>DoomFrame Ultra Gaming</h3>
+                            <p>Experiencia gaming definitiva. Intel Core i9, 32GB RAM DDR5, SSD 2TB PCIe Gen4, RTX 4070Ti.</p>
+                            <p class="precio">$2,599.99</p>
+                            <a href="#" class="btn btn-primary btn-pulse">Comprar Ahora</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gama Media -->
+            <div class="tab-content" id="media">
+                <div class="productos-grid">
+                    <div class="producto-card">
+                        <img src="img/pc-gama-media-1.jpg" alt="PC Gama Media" class="producto-img">
+                        <div class="producto-info">
+                            <h3>DoomFrame Pro Gaming</h3>
+                            <p>Equilibrio perfecto para gaming. Intel Core i7, 16GB RAM, SSD 1TB, RTX 4060.</p>
+                            <p class="precio">$1,799.99</p>
+                            <a href="#" class="btn btn-primary">Comprar Ahora</a>
+                        </div>
+                    </div>
+                    <div class="producto-card">
+                        <img src="img/pc-gama-media-2.jpg" alt="PC Gama Media" class="producto-img">
+                        <div class="producto-info">
+                            <h3>DoomFrame Workstation</h3>
+                            <p>Para profesionales exigentes. AMD Ryzen 7, 32GB RAM, SSD 512GB + HDD 2TB, RTX 3060.</p>
+                            <p class="precio">$1,499.99</p>
+                            <a href="#" class="btn btn-primary">Comprar Ahora</a>
+                        </div>
+                    </div>
+                    <div class="producto-card oferta-especial">
+                        <img src="img/pc-gama-media-3.jpg" alt="PC Gama Media" class="producto-img">
+                        <div class="producto-info">
+                            <h3>DoomFrame Creator</h3>
+                            <p>Perfecto para creadores de contenido. AMD Ryzen 7, 16GB RAM, SSD 1TB, RTX 3070.</p>
+                            <p class="precio">$1,699.99</p>
+                            <a href="#" class="btn btn-primary">Comprar Ahora</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gama Baja -->
+            <div class="tab-content" id="baja">
+                <div class="productos-grid">
+                    <div class="producto-card">
+                        <img src="img/pc-gama-baja-1.jpg" alt="PC Gama Baja" class="producto-img">
+                        <div class="producto-info">
+                            <h3>DoomFrame Starter</h3>
+                            <p>Ideal para estudiantes y oficina. Intel Core i5, 8GB RAM, SSD 512GB, Intel UHD Graphics.</p>
+                            <p class="precio">$799.99</p>
+                            <a href="#" class="btn btn-primary">Comprar Ahora</a>
+                        </div>
+                    </div>
+                    <div class="producto-card oferta-especial">
+                        <img src="img/pc-gama-baja-2.jpg" alt="PC Gama Baja" class="producto-img">
+                        <div class="producto-info">
+                            <h3>DoomFrame Essentials</h3>
+                            <p>Rendimiento básico para tareas cotidianas. AMD Ryzen 5, 8GB RAM, SSD 256GB, Radeon Graphics.</p>
+                            <p class="precio">$649.99</p>
+                            <a href="#" class="btn btn-primary">Comprar Ahora</a>
+                        </div>
+                    </div>
+                    <div class="producto-card">
+                        <img src="img/pc-gama-baja-3.jpg" alt="PC Gama Baja" class="producto-img">
+                        <span class="new-badge">NUEVO</span>
+                        <div class="producto-info">
+                            <h3>DoomFrame Mini</h3>
+                            <p>Compacto y potente. Intel Core i3, 8GB RAM, SSD 512GB, NVIDIA GTX 1650.</p>
+                            <p class="precio">$899.99</p>
+                            <a href="#" class="btn btn-primary">Comprar Ahora</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contacto Section -->
+        <section class="about" id="contacto">
+            <h2 class="section-title">Contacto</h2>
+            <div class="about-content">
+                <div class="about-card">
+                    <h3>Información de Contacto</h3>
+                    <p><strong>Dirección:</strong> Av. Tecnológica 1234, Col. Digital, Ciudad Tech</p>
+                    <p><strong>Teléfono:</strong> +52 (55) 1234-5678</p>
+                    <p><strong>Email:</strong> info@doomframestore.com</p>
+                    <p><strong>Horario:</strong> Lunes a Viernes 9:00 - 18:00, Sábados 10:00 - 14:00</p>
+                    
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="about-card">
+                    <form class="contact-form">
+                        <h3>Envíanos un Mensaje</h3>
+                        <div class="form-group">
+                            <label for="nombre">Nombre Completo</label>
+                            <input type="text" id="nombre" name="nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Correo Electrónico</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono">Teléfono</label>
+                            <input type="tel" id="telefono" name="telefono">
+                        </div>
+                        <div class="form-group">
+                            <label for="mensaje">Mensaje</label>
+                            <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Sobre DoomFrame</h3>
+                <p>Somos una empresa comprometida con proporcionar la mejor tecnología a precios accesibles. Nuestra misión es conectar a los usuarios con los equipos que necesitan para alcanzar su máximo potencial.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Enlaces Rápidos</h3>
+                <ul>
+                    <li><a href="#home">Inicio</a></li>
+                    <li><a href="#about">Quiénes Somos</a></li>
+                    <li><a href="#valores">Valores</a></li>
+                    <li><a href="#productos">Productos</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Servicios</h3>
+                <ul>
+                    <li><a href="#">Servicio Técnico</a></li>
+                    <li><a href="#">Armado de PCs</a></li>
+                    <li><a href="#">Asesoría Personalizada</a></li>
+                    <li><a href="#">Mantenimiento</a></li>
+                    <li><a href="#">Garantía Extendida</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Suscríbete</h3>
+                <p>Recibe nuestras ofertas y novedades directamente en tu correo.</p>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <input type="email" id="subscribe-email" name="subscribe-email" placeholder="Tu correo electrónico" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Suscribirme</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 DoomFrame Store. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Botón de chat -->
+    <div class="chat-button">
+        <span>💬</span>
+    </div>
+
+    <!-- Botón de volver arriba -->
+    <div class="scroll-top">
+        <span>↑</span>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Función para ocultar la pantalla de bienvenida
+        document.getElementById('enter-btn').addEventListener('click', function() {
+            const welcomeScreen = document.getElementById('welcome-screen');
+            welcomeScreen.style.opacity = '0';
+            setTimeout(function() {
+                welcomeScreen.style.display = 'none';
+            }, 1000);
+        });
+
+        // Función para cambiar entre pestañas de productos
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remover clase active de todos los botones
+                tabBtns.forEach(btn => btn.classList.remove('active'));
+                // Añadir clase active al botón clickeado
+                this.classList.add('active');
+                
+                // Ocultar todos los contenidos
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Mostrar el contenido correspondiente
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Función para el botón de volver arriba
+        const scrollTopBtn = document.querySelector('.scroll-top');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('active');
+            } else {
+                scrollTopBtn.classList.remove('active');
+            }
+        });
+        
+        scrollTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Función para el menú móvil
+        const mobileMenuBtn = document.getElementById('mobile-menu');
+        const navMenu = document.querySelector('nav ul');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+        });
+
+        // Animación para mostrar elementos cuando se hace scroll
+        const animatedElements = document.querySelectorAll('.about-card, .valor-card, .producto-card, .section-title');
+        
+        function checkVisibility() {
+            animatedElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementBottom = element.getBoundingClientRect().bottom;
+                
+                const isVisible = (elementTop < window.innerHeight - 100) && (elementBottom > 0);
+                
+                if (isVisible) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', checkVisibility);
+        window.addEventListener('load', checkVisibility);
+        
+        // Efecto de sacudida para el botón de chat
+        const chatButton = document.querySelector('.chat-button');
+        
+        setInterval(function() {
+            chatButton.classList.add('shake');
+            setTimeout(function() {
+                chatButton.classList.remove('shake');
+            }, 500);
+        }, 10000);
+
+        // Smooth scrolling para los enlaces de navegación
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+                
+                // Cerrar menú móvil si está abierto
+                if (navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                }
+            });
+        });
+
+        // Cargar fuentes de iconos
+        const fontAwesome = document.createElement('link');
+        fontAwesome.rel = 'stylesheet';
+        fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css';
+        document.head.appendChild(fontAwesome);
+    </script>
+</body>
+</html>
